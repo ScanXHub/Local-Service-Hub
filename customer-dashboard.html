@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Customer Dashboard - Local Service Hub</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* ================= GENERAL ================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
+
+
+/* ================= HEADER ================= */
+
+.dashboard-header {
+    background: #111827;
+    color: white;
+    padding: 18px 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+
+.dashboard-logo {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+
+.header-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+
+.header-btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+
+
+.home-btn {
+    background: #2563eb;
+}
+
+
+.logout-btn {
+    background: #dc2626;
+}
+
+
+/* ================= MAIN ================= */
+
+.dashboard-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+
+/* ================= WELCOME ================= */
+
+.welcome-box {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.08);
+
+    margin-bottom: 25px;
+}
+
+
+.welcome-box h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+
+.welcome-box p {
+    color: #666;
+}
+
+
+/* ================= INFORMATION CARDS ================= */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 20px;
+}
+
+
+.info-card {
+    background: white;
+    padding: 22px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.08);
+}
+
+
+.info-icon {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+
+.info-card h3 {
+    margin: 5px 0 10px;
+}
+
+
+.info-card p {
+    color: #555;
+    word-break: break-word;
+}
+
+
+/* ================= REQUEST SECTION ================= */
+
+.requests-section {
+    background: white;
+
+    margin-top: 25px;
+
+    padding: 25px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.08);
+}
+
+
+.requests-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+
+.request-count {
+    background: #2563eb;
+    color: white;
+
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    font-weight: bold;
+}
+
+
+/* ================= REQUEST CARD ================= */
+
+.request-card {
+    border: 1px solid #ddd;
+
+    border-radius: 13px;
+
+    padding: 20px;
+
+    margin-top: 18px;
+
+    background: #fafafa;
+}
+
+
+.request-card h3 {
+    margin-top: 0;
+}
+
+
+.request-card p {
+    margin: 9px 0;
+
+    line-height: 1.5;
+}
+
+
+.status {
+    display: inline-block;
+
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+
+.status-completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+
+/* ================= PROVIDER INFO ================= */
+
+.provider-box {
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: #eef4ff;
+
+    border-left: 4px solid #2563eb;
+}
+
+
+/* ================= NO REQUEST ================= */
+
+.no-requests {
+    text-align: center;
+
+    padding: 35px 15px;
+
+    color: #777;
+}
+
+
+.no-requests-icon {
+    font-size: 45px;
+
+    margin-bottom: 10px;
+}
+
+
+/* ================= NEW REQUEST BUTTON ================= */
+
+.new-request-btn {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    background: #16a34a;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 12px 20px;
+
+    border-radius: 9px;
+
+    font-weight: bold;
+}
+
+
+/* ================= FOOTER ================= */
+
+.dashboard-footer {
+    text-align: center;
+
+    color: #777;
+
+    padding: 30px 15px;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+    .dashboard-header {
+        padding: 15px;
+    }
+
+    .dashboard-logo {
+        font-size: 18px;
+    }
+
+    .dashboard-container {
+        padding: 15px;
+    }
+
+    .welcome-box,
+    .requests-section {
+        padding: 18px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="dashboard-header">
+
+<div class="dashboard-logo">
+    🛠️ Local Service Hub
+</div>
+
+<div class="header-buttons">
+
+<button
+class="header-btn home-btn"
+type="button"
+onclick="goHome()"
+
+>
+
+
+🏠 Home
+
+
+</button>
+
+<button
+class="header-btn logout-btn"
+type="button"
+onclick="logoutCustomer()"
+
+>
+
+
+🚪 Logout
+
+
+</button>
+
+</div>
+
+</header>
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="dashboard-container">
+
+<!-- ================= WELCOME ================= -->
+
+<section class="welcome-box">
+
+<h1>
+    👋 Welcome, <span id="customerName">Customer</span>!
+</h1>
+
+<p>
+    Welcome to your Local Service Hub dashboard.
+    You can view your account information and track
+    your service requests here.
+</p>
+
+</section>
+
+<!-- =====================================================
+     CUSTOMER INFORMATION
+===================================================== -->
+
+<section class="info-grid">
+
+<!-- NAME -->
+
+<div class="info-card">
+
+<div class="info-icon">
+    👤
+</div>
+
+<h3>
+    Name
+</h3>
+
+<p id="infoName">
+    Loading...
+</p>
+
+</div>
+
+<!-- EMAIL -->
+
+<div class="info-card">
+
+<div class="info-icon">
+    📧
+</div>
+
+<h3>
+    Email
+</h3>
+
+<p id="infoEmail">
+    Loading...
+</p>
+
+</div>
+
+<!-- PHONE -->
+
+<div class="info-card">
+
+<div class="info-icon">
+    📱
+</div>
+
+<h3>
+    Mobile Number
+</h3>
+
+<p id="infoPhone">
+    Loading...
+</p>
+
+</div>
+
+<!-- LOCATION -->
+
+<div class="info-card">
+
+<div class="info-icon">
+    📍
+</div>
+
+<h3>
+    Location
+</h3>
+
+<p id="infoLocation">
+    Loading...
+</p>
+
+</div>
+
+<!-- ACCOUNT TYPE -->
+
+<div class="info-card">
+
+<div class="info-icon">
+    👥
+</div>
+
+<h3>
+    Account Type
+</h3>
+
+<p>
+    Customer
+</p>
+
+</div>
+
+<!-- REQUEST COUNT -->
+
+<div class="info-card">
+
+<div class="info-icon">
+    📋
+</div>
+
+<h3>
+    My Requests
+</h3>
+
+<p id="requestCount">
+    0
+</p>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     REQUESTS
+===================================================== -->
+
+<section class="requests-section">
+
+<div class="requests-header">
+
+<div>
+
+<h2>
+    📋 My Service Requests
+</h2>
+
+<p>
+    Track the service requests you have submitted.
+</p>
+
+</div>
+
+<div
+    class="request-count"
+    id="requestBadge"
+>
+    0 Requests
+</div>
+
+</div>
+
+<div id="requestsList">
+
+<div class="no-requests">
+
+<div class="no-requests-icon">
+    ⏳
+</div>
+
+Loading your requests...
+
+</div>
+
+</div>
+
+<a
+href="index.html#requestSection"
+class="new-request-btn"
+
+>
+
+
+➕ Request New Service
+
+
+</a>
+
+</section>
+
+</main>
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="dashboard-footer">
+
+©️ 2026 Local Service Hub. All Rights Reserved.
+
+</footer>
+
+<script>
+
+
+/* =====================================================
+   CUSTOMER DATA
+===================================================== */
+
+var currentCustomer = null;
+
+
+/* =====================================================
+   LOAD CUSTOMER
+===================================================== */
+
+function loadCustomer() {
+
+
+    var loggedIn =
+        localStorage.getItem(
+            "localServiceHubLoggedIn"
+        );
+
+
+    var savedUser =
+        localStorage.getItem(
+            "localServiceHubUser"
+        );
+
+
+    /*
+     * Check login
+     */
+
+    if (
+        loggedIn !== "true" ||
+        !savedUser
+    ) {
+
+        alert(
+            "🔐 Please login first."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    /*
+     * Read account
+     */
+
+    try {
+
+        currentCustomer =
+            JSON.parse(
+                savedUser
+            );
+
+    } catch (error) {
+
+        alert(
+            "❌ Account information could not be loaded."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    /*
+     * Make sure customer is
+     * accessing customer dashboard
+     */
+
+    if (
+        currentCustomer.type !==
+        "customer"
+    ) {
+
+        alert(
+            "❌ This dashboard is only for customers."
+        );
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
+
+
+    /*
+     * Display customer information
+     */
+
+    document.getElementById(
+        "customerName"
+    ).innerText =
+        currentCustomer.name ||
+        "Customer";
+
+
+    document.getElementById(
+        "infoName"
+    ).innerText =
+        currentCustomer.name ||
+        "Not available";
+
+
+    document.getElementById(
+        "infoEmail"
+    ).innerText =
+        currentCustomer.email ||
+        "Not available";
+
+
+    document.getElementById(
+        "infoPhone"
+    ).innerText =
+        currentCustomer.phone ||
+        "Not available";
+
+
+    document.getElementById(
+        "infoLocation"
+    ).innerText =
+        currentCustomer.location ||
+        "Not available";
+
+
+    loadCustomerRequests();
+
+}
+
+
+/* =====================================================
+   LOAD CUSTOMER REQUESTS
+===================================================== */
+
+function loadCustomerRequests() {
+
+
+    var requestStorage =
+        localStorage.getItem(
+            "localServiceHubRequests"
+        );
+
+
+    var requests = [];
+
+
+    /*
+     * Read request array
+     */
+
+    if (requestStorage) {
+
+        try {
+
+            requests =
+                JSON.parse(
+                    requestStorage
+                );
+
+
+            if (
+                !Array.isArray(
+                    requests
+                )
+            ) {
+
+                requests = [];
+
+            }
+
+        } catch (error) {
+
+            requests = [];
+
+        }
+
+    }
+
+
+    /*
+     * Also support the older
+     * single-request storage.
+     */
+
+    if (
+        requests.length === 0
+    ) {
+
+        var oldRequest =
+            localStorage.getItem(
+                "localServiceHubRequest"
+            );
+
+
+        if (oldRequest) {
+
+            try {
+
+                var parsedOldRequest =
+                    JSON.parse(
+                        oldRequest
+                    );
+
+
+                if (
+                    parsedOldRequest &&
+                    typeof parsedOldRequest ===
+                    "object"
+                ) {
+
+                    requests.push(
+                        parsedOldRequest
+                    );
+
+                }
+
+            } catch (error) {
+
+                /* Ignore invalid old request */
+
+            }
+
+        }
+
+    }
+
+
+    /*
+     * Match requests to
+     * currently logged-in customer.
+     */
+
+    var customerEmail =
+        String(
+            currentCustomer.email || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    var customerPhone =
+        String(
+            currentCustomer.phone || ""
+        )
+        .replace(
+            /\D/g,
+            ""
+        );
+
+
+    var customerName =
+        String(
+            currentCustomer.name || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    var matchingRequests =
+        requests.filter(
+            function(request) {
+
+
+                var requestEmail =
+                    String(
+                        request.email || ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                var requestPhone =
+                    String(
+                        request.phone || ""
+                    )
+                    .replace(
+                        /\D/g,
+                        ""
+                    );
+
+
+                var requestName =
+                    String(
+                        request.name || ""
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                /*
+                 * Best match:
+                 * email
+                 */
+
+                if (
+                    customerEmail &&
+                    requestEmail &&
+                    customerEmail ===
+                    requestEmail
+                ) {
+
+                    return true;
+
+                }
+
+
+                /*
+                 * Second match:
+                 * phone
+                 */
+
+                if (
+                    customerPhone &&
+                    requestPhone &&
+                    customerPhone ===
+                    requestPhone
+                ) {
+
+                    return true;
+
+                }
+
+
+                /*
+                 * Third match:
+                 * name + phone not available
+                 */
+
+                if (
+                    !requestEmail &&
+                    !requestPhone &&
+                    customerName &&
+                    requestName ===
+                    customerName
+                ) {
+
+                    return true;
+
+                }
+
+
+                return false;
+
+            }
+        );
+
+
+    /*
+     * Display count
+     */
+
+    document.getElementById(
+        "requestCount"
+    ).innerText =
+        matchingRequests.length;
+
+
+    document.getElementById(
+        "requestBadge"
+    ).innerText =
+        matchingRequests.length +
+        (
+            matchingRequests.length === 1
+            ? " Request"
+            : " Requests"
+        );
+
+
+    /*
+     * Display requests
+     */
+
+    var list =
+        document.getElementById(
+            "requestsList"
+        );
+
+
+    list.innerHTML =
+        "";
+
+
+    if (
+        matchingRequests.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="no-requests">
+
+                <div class="no-requests-icon">
+                    📭
+                </div>
+
+                <strong>
+                    No service requests yet
+                </strong>
+
+                <br><br>
+
+                You have not submitted
+                any service requests.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * Show newest requests first
+     */
+
+    matchingRequests
+        .slice()
+        .reverse()
+        .forEach(
+            function(request) {
+
+                displayRequest(
+                    request
+                );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   DISPLAY REQUEST
+===================================================== */
+
+function displayRequest(request) {
+
+
+    var list =
+        document.getElementById(
+            "requestsList"
+        );
+
+
+    var status =
+        request.status ||
+        "Pending";
+
+
+    var statusClass =
+        String(status)
+            .toLowerCase() ===
+        "completed"
+        ?
+        "status-completed"
+        :
+        "status-pending";
+
+
+    var providerHTML = "";
+
+
+    if (
+        request.provider
+    ) {
+
+        providerHTML = `
+
+            <div class="provider-box">
+
+                🛠️
+
+                <strong>
+                    Provider:
+                </strong>
+
+                ${escapeHTML(
+                    request.provider
+                )}
+
+            </div>
+
+        `;
+
+    }
+
+
+    var requestDate =
+        request.createdAt ||
+        "Not available";
+
+
+    list.innerHTML += `
+
+        <div class="request-card">
+
+            <h3>
+                🛠️
+                ${escapeHTML(
+                    request.service ||
+                    "Service Request"
+                )}
+            </h3>
+
+
+            <p>
+
+                🆔
+
+                <strong>
+                    Request ID:
+                </strong>
+
+                ${escapeHTML(
+                    String(
+                        request.id ||
+                        "Not available"
+                    )
+                )}
+
+            </p>
+
+
+            <p>
+
+                📍
+
+                <strong>
+                    Location:
+                </strong>
+
+                ${escapeHTML(
+                    request.location ||
+                    "Not provided"
+                )}
+
+            </p>
+
+
+            <p>
+
+                📝
+
+                <strong>
+                    Problem:
+                </strong>
+
+                ${escapeHTML(
+                    request.problem ||
+                    "Not provided"
+                )}
+
+            </p>
+
+
+            <p>
+
+                📅
+
+                <strong>
+                    Preferred Date:
+                </strong>
+
+                ${escapeHTML(
+                    request.date ||
+                    "Not provided"
+                )}
+
+            </p>
+
+
+            <p>
+
+                🕒
+
+                <strong>
+                    Submitted:
+                </strong>
+
+                ${escapeHTML(
+                    requestDate
+                )}
+
+            </p>
+
+
+            <p>
+
+                📋
+
+                <strong>
+                    Status:
+                </strong>
+
+                <span
+                    class="status ${statusClass}"
+                >
+                    ${
+                        String(status)
+                            .toLowerCase() ===
+                        "completed"
+                        ?
+                        "✅ Completed"
+                        :
+                        "⏳ Pending"
+                    }
+                </span>
+
+            </p>
+
+
+            ${providerHTML}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+
+    var div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.innerText =
+        String(
+            value
+        );
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   GO HOME
+===================================================== */
+
+function goHome() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logoutCustomer() {
+
+
+    localStorage.removeItem(
+        "localServiceHubLoggedIn"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =====================================================
+   AUTO REFRESH
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (
+            event.key ===
+            "localServiceHubRequests"
+        ) {
+
+            loadCustomerRequests();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START DASHBOARD
+===================================================== */
+
+window.onload =
+    function() {
+
+        loadCustomer();
+
+    };
+
+
+</script>
+
+</body>
+
+</html>

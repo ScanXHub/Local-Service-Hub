@@ -1,0 +1,659 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+body {
+font-family: Arial, sans-serif;
+background: #f5f7fb;
+color: #222;
+}
+
+/* HEADER */
+
+.header {
+width: 100%;
+background: #ffffff;
+padding: 18px 7%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+position: sticky;
+top: 0;
+z-index: 100;
+}
+
+.logo {
+font-size: 22px;
+font-weight: bold;
+}
+
+nav a {
+text-decoration: none;
+color: #333;
+margin-left: 25px;
+font-weight: 500;
+}
+
+/* HERO */
+
+.hero {
+min-height: 480px;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 50px 20px;
+background: linear-gradient(135deg, #2563eb, #4f46e5);
+color: white;
+}
+
+.hero-content {
+max-width: 800px;
+}
+
+.hero h1 {
+font-size: 48px;
+margin-bottom: 20px;
+}
+
+.hero p {
+font-size: 18px;
+line-height: 1.6;
+margin-bottom: 30px;
+}
+
+/* SEARCH */
+
+.search-box {
+display: flex;
+max-width: 650px;
+margin: auto;
+background: white;
+padding: 8px;
+border-radius: 10px;
+}
+
+.search-box input {
+flex: 1;
+border: none;
+outline: none;
+padding: 15px;
+font-size: 16px;
+}
+
+.search-box button {
+border: none;
+background: #111827;
+color: white;
+padding: 0 25px;
+border-radius: 7px;
+cursor: pointer;
+font-size: 16px;
+}
+
+/* SERVICES */
+
+.services {
+padding: 70px 7%;
+text-align: center;
+}
+
+.services h2,
+.about h2,
+.contact h2 {
+font-size: 32px;
+margin-bottom: 10px;
+}
+
+.section-text {
+color: #666;
+margin-bottom: 40px;
+}
+
+.service-container {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 25px;
+}
+
+.service-card {
+background: white;
+padding: 30px 20px;
+border-radius: 15px;
+box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+cursor: pointer;
+transition: 0.3s;
+}
+
+.service-card:hover {
+transform: translateY(-8px);
+}
+
+.icon {
+font-size: 45px;
+margin-bottom: 15px;
+}
+
+.service-card h3 {
+margin-bottom: 10px;
+}
+
+.service-card p {
+color: #666;
+font-size: 14px;
+}
+
+/* ABOUT */
+
+.about {
+padding: 70px 10%;
+text-align: center;
+background: white;
+}
+
+.about p {
+max-width: 750px;
+margin: 20px auto 0;
+line-height: 1.7;
+color: #555;
+}
+
+/* CONTACT */
+
+.contact {
+padding: 70px 20px;
+text-align: center;
+}
+
+.contact p {
+margin: 15px 0 25px;
+color: #555;
+}
+
+.contact button {
+background: #2563eb;
+color: white;
+border: none;
+padding: 14px 25px;
+border-radius: 8px;
+cursor: pointer;
+font-size: 16px;
+}
+
+/* FOOTER */
+
+footer {
+background: #111827;
+color: white;
+text-align: center;
+padding: 25px;
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+.header {
+    flex-direction: column;
+    gap: 15px;
+}
+
+nav a {
+    margin: 0 7px;
+    font-size: 14px;
+}
+
+.hero h1 {
+    font-size: 34px;
+}
+
+.service-container {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+}
+
+@media (max-width: 500px) {
+
+.service-container {
+    grid-template-columns: 1fr;
+}
+
+.search-box {
+    flex-direction: column;
+    gap: 8px;
+}
+
+.search-box button {
+    padding: 14px;
+}
+
+}
+/* PROVIDERS */
+
+.providers {
+    padding: 70px 7%;
+    background: #eef2ff;
+    text-align: center;
+}
+
+.provider-list {
+    max-width: 900px;
+    margin: 35px auto 0;
+    display: grid;
+    gap: 20px;
+}
+
+.provider-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.provider-icon {
+    font-size: 55px;
+}
+
+.provider-info h3 {
+    margin-bottom: 8px;
+}
+
+.provider-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.provider-info button {
+    border: none;
+    padding: 10px 15px;
+    margin: 10px 5px 0 0;
+    border-radius: 7px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+}
+
+@media (max-width: 600px) {
+
+    .provider-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+}
+/* PROVIDER MODAL */
+
+.provider-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.provider-modal-box {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.big-provider-icon {
+    font-size: 70px;
+    margin-bottom: 10px;
+}
+
+.provider-modal-box h2 {
+    margin-bottom: 10px;
+}
+
+.provider-modal-box hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.provider-modal-box h3 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.modal-buttons {
+    margin-top: 25px;
+}
+
+.modal-buttons button {
+    border: none;
+    padding: 12px 15px;
+    margin: 5px;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+.modal-buttons button:hover {
+    opacity: 0.85;
+}
+
+@media (max-width: 500px) {
+
+    .provider-modal-box {
+        padding: 25px 18px;
+    }
+
+    .modal-buttons button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+}
+/* SERVICE REQUEST */
+
+.request-section {
+    padding: 70px 20px;
+    background: white;
+    text-align: center;
+}
+
+.request-section h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.request-section > p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+#serviceRequestForm {
+    max-width: 600px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#serviceRequestForm input,
+#serviceRequestForm select,
+#serviceRequestForm textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+}
+
+#serviceRequestForm textarea {
+    resize: vertical;
+}
+
+#serviceRequestForm input:focus,
+#serviceRequestForm select:focus,
+#serviceRequestForm textarea:focus {
+    border-color: #2563eb;
+}
+
+#serviceRequestForm button {
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+#serviceRequestForm button:hover {
+    opacity: 0.9;
+}
+
+#requestMessage {
+    display: none;
+    max-width: 600px;
+    margin: 25px auto 0;
+    padding: 20px;
+    border-radius: 10px;
+    background: #eef2ff;
+    line-height: 1.7;
+}
+/* REGISTRATION */
+
+.registration-section {
+padding: 70px 7%;
+text-align: center;
+background: #f5f7fb;
+}
+
+.registration-section h2 {
+font-size: 32px;
+margin-bottom: 10px;
+}
+
+.registration-section > p {
+color: #666;
+margin-bottom: 35px;
+}
+
+.registration-container {
+max-width: 850px;
+margin: auto;
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 25px;
+}
+
+.registration-card {
+background: white;
+padding: 35px 25px;
+border-radius: 15px;
+box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.registration-icon {
+font-size: 55px;
+margin-bottom: 15px;
+}
+
+.registration-card h3 {
+margin-bottom: 10px;
+}
+
+.registration-card p {
+color: #666;
+margin-bottom: 20px;
+}
+
+.registration-card button {
+border: none;
+background: #2563eb;
+color: white;
+padding: 13px 20px;
+border-radius: 8px;
+cursor: pointer;
+}
+
+/* REGISTRATION MODAL */
+
+.registration-modal {
+display: none;
+position: fixed;
+z-index: 2000;
+inset: 0;
+background: rgba(0,0,0,0.65);
+justify-content: center;
+align-items: center;
+padding: 20px;
+}
+
+.registration-box {
+background: white;
+width: 100%;
+max-width: 500px;
+max-height: 90vh;
+overflow-y: auto;
+padding: 35px;
+border-radius: 20px;
+position: relative;
+}
+
+.registration-close {
+position: absolute;
+right: 15px;
+top: 15px;
+border: none;
+background: none;
+font-size: 20px;
+cursor: pointer;
+}
+
+#registrationForm {
+display: flex;
+flex-direction: column;
+gap: 14px;
+margin-top: 25px;
+}
+
+#registrationForm input,
+#registrationForm select {
+padding: 14px;
+border: 1px solid #ddd;
+border-radius: 8px;
+font-size: 16px;
+outline: none;
+}
+
+#providerFields {
+display: none;
+}
+
+#providerFields select,
+#providerFields input {
+width: 100%;
+margin-bottom: 14px;
+}
+
+#registrationForm button {
+padding: 14px;
+border: none;
+border-radius: 8px;
+background: #2563eb;
+color: white;
+font-size: 16px;
+cursor: pointer;
+}
+
+#registrationMessage {
+display: none;
+margin-top: 20px;
+padding: 15px;
+border-radius: 8px;
+background: #eef2ff;
+text-align: center;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+
+.registration-container {
+    grid-template-columns: 1fr;
+}
+
+.registration-box {
+    padding: 25px 18px;
+}
+
+}
+/* DASHBOARD REQUEST */
+
+.dashboard-request-card {
+    margin-top: 20px;
+    padding: 25px;
+    background: #f8fafc;
+    border-radius: 12px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+}
+
+.dashboard-request-card h3 {
+    margin-bottom: 15px;
+}
+
+.dashboard-request-card p {
+    margin: 8px 0;
+}
+
+.dashboard-request-card button {
+    border: none;
+    padding: 11px 16px;
+    margin: 12px 5px 0 0;
+    border-radius: 7px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+.dashboard-request-card button:hover {
+    opacity: 0.85;
+}
+#addProviderModal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px;
+}
+
+#addProviderModal input {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+#addProviderModal input:focus {
+    outline: none;
+    border-color: #2563eb;
+}

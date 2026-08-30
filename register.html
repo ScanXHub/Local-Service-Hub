@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Provider Registration - Local Service Hub</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+}
+
+header{
+    background:linear-gradient(135deg,#1d4ed8,#2563eb);
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+header h1{
+    margin:0;
+}
+
+.container{
+    max-width:600px;
+    margin:30px auto;
+    padding:15px;
+}
+
+.box{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 4px 18px rgba(0,0,0,.1);
+}
+
+h2{
+    text-align:center;
+    color:#1d4ed8;
+}
+
+label{
+    display:block;
+    margin-top:13px;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+button{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.submit{
+    margin-top:18px;
+    background:#16a34a;
+    color:white;
+}
+
+.back{
+    margin-top:10px;
+    background:#e5e7eb;
+}
+
+#message{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+    line-height:1.6;
+}
+
+.loading{
+    opacity:.6;
+    pointer-events:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🛠️ Local Service Hub</h1>
+
+<p>Provider Registration</p>
+
+</header>
+
+<div class="container">
+
+<div class="box">
+
+<h2>📝 Register Your Service</h2>
+
+<p style="text-align:center;color:#64748b;">
+Create your provider account and submit your service for verification.
+</p>
+
+<label>
+Provider Name *
+</label>
+
+<input
+id="name"
+type="text"
+placeholder="Your full name"
+
+>
+
+<label>
+Email Address *
+</label>
+
+<input
+id="email"
+type="email"
+placeholder="[your@email.com](mailto:your@email.com)"
+
+>
+
+<label>
+Create Password *
+</label>
+
+<input
+id="password"
+type="password"
+placeholder="Minimum 6 characters"
+
+>
+
+<label>
+Service *
+</label>
+
+<select id="service">
+
+<option value="">
+Select service
+</option>
+
+<option>Electrician</option>
+<option>Plumber</option>
+<option>Tutor</option>
+<option>Carpenter</option>
+<option>Mechanic</option>
+<option>Painter</option>
+<option>Cleaner</option>
+<option>AC Repair</option>
+<option>Computer Repair</option>
+<option>Mobile Repair</option>
+<option>Other</option>
+
+</select>
+
+<label>
+Location *
+</label>
+
+<input
+id="location"
+type="text"
+placeholder="Area / City"
+
+>
+
+<label>
+Phone Number *
+</label>
+
+<input
+id="phone"
+type="tel"
+placeholder="10 digit mobile number"
+
+>
+
+<label>
+Experience
+</label>
+
+<input
+id="experience"
+type="text"
+placeholder="Example: 5 years"
+
+>
+
+<label>
+Price
+</label>
+
+<input
+id="price"
+type="text"
+placeholder="Example: ₹500 onwards"
+
+>
+
+<label>
+Photo URL
+</label>
+
+<input
+id="photo"
+type="url"
+placeholder="https://example.com/photo.jpg"
+
+>
+
+<label>
+About Your Service
+</label>
+
+<textarea
+id="about"
+placeholder="Tell customers about your service"
+></textarea>
+
+<button
+id="submitButton"
+class="submit"
+onclick="registerProvider()"
+
+>
+
+📤 Submit Registration </button>
+
+<button
+class="back"
+onclick="location.href='index.html'"
+
+>
+
+← Back to Local Service Hub </button>
+
+<div id="message"></div>
+
+</div>
+
+</div>
+
+<!-- Firebase -->
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =====================================
+   FIREBASE CONFIG
+===================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyC4SHeAHMqREmOsCZjs1etQItlT1uU08BU",
+
+    authDomain:
+    "local-service-hub-c8706.firebaseapp.com",
+
+    projectId:
+    "local-service-hub-c8706",
+
+    storageBucket:
+    "local-service-hub-c8706.firebasestorage.app",
+
+    messagingSenderId:
+    "879144352997",
+
+    appId:
+    "1:879144352997:web:c696efd2829f555201280c"
+
+};
+
+
+/* =====================================
+   INITIALIZE FIREBASE
+===================================== */
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+/* =====================================
+   REGISTER PROVIDER
+===================================== */
+
+window.registerProvider =
+async function(){
+
+    const button =
+        document.getElementById(
+            "submitButton"
+        );
+
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    const name =
+        document.getElementById(
+            "name"
+        ).value.trim();
+
+
+    const email =
+        document.getElementById(
+            "email"
+        ).value.trim();
+
+
+    const password =
+        document.getElementById(
+            "password"
+        ).value;
+
+
+    const service =
+        document.getElementById(
+            "service"
+        ).value;
+
+
+    const location =
+        document.getElementById(
+            "location"
+        ).value.trim();
+
+
+    const phone =
+        document.getElementById(
+            "phone"
+        ).value.trim();
+
+
+    const experience =
+        document.getElementById(
+            "experience"
+        ).value.trim();
+
+
+    const price =
+        document.getElementById(
+            "price"
+        ).value.trim();
+
+
+    const photo =
+        document.getElementById(
+            "photo"
+        ).value.trim();
+
+
+    const about =
+        document.getElementById(
+            "about"
+        ).value.trim();
+
+
+    /* =================================
+       VALIDATION
+    ================================= */
+
+    if(
+        !name ||
+        !email ||
+        !password ||
+        !service ||
+        !location ||
+        !phone
+    ){
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Please fill all required fields.";
+
+        return;
+
+    }
+
+
+    if(
+        password.length < 6
+    ){
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Password must contain at least 6 characters.";
+
+        return;
+
+    }
+
+
+    const cleanPhone =
+        phone.replace(
+            /\D/g,
+            ""
+        );
+
+
+    if(
+        cleanPhone.length !== 10
+    ){
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Enter a valid 10 digit phone number.";
+
+        return;
+
+    }
+
+
+    /* =================================
+       START
+    ================================= */
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "⏳ Creating account...";
+
+
+    message.style.color =
+        "#2563eb";
+
+    message.textContent =
+        "Please wait...";
+
+
+    try{
+
+        /* =============================
+           CREATE AUTH ACCOUNT
+        ============================= */
+
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+        const user =
+            userCredential.user;
+
+
+        /* =============================
+           SAVE PROVIDER DATA
+        ============================= */
+
+        await addDoc(
+            collection(
+                db,
+                "providers"
+            ),
+            {
+
+                uid:
+                    user.uid,
+
+                name:
+                    name,
+
+                email:
+                    email,
+
+                service:
+                    service,
+
+                location:
+                    location,
+
+                phone:
+                    cleanPhone,
+
+                experience:
+                    experience,
+
+                price:
+                    price,
+
+                photo:
+                    photo,
+
+                about:
+                    about,
+
+                rating:
+                    "New",
+
+                verified:
+                    false,
+
+                status:
+                    "pending",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        /* =============================
+           SUCCESS
+        ============================= */
+
+        message.style.color =
+            "#15803d";
+
+        message.innerHTML =
+            "✅ Registration submitted successfully!<br><br>"+
+            "Your provider account has been created.<br>"+
+            "Your profile is now <b>Pending Verification</b>.<br><br>"+
+            "An administrator must verify your profile before customers can see it.";
+
+
+        document
+            .querySelectorAll(
+                "input, select, textarea"
+            )
+            .forEach(
+                function(element){
+
+                    element.disabled =
+                        true;
+
+                }
+            );
+
+
+        button.textContent =
+            "✅ Registration Submitted";
+
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "📤 Submit Registration";
+
+
+        message.style.color =
+            "#dc2626";
+
+
+        if(
+            error.code ===
+            "auth/email-already-in-use"
+        ){
+
+            message.textContent =
+                "❌ This email is already registered.";
+
+        }
+
+        else if(
+            error.code ===
+            "auth/invalid-email"
+        ){
+
+            message.textContent =
+                "❌ Please enter a valid email address.";
+
+        }
+
+        else if(
+            error.code ===
+            "auth/weak-password"
+        ){
+
+            message.textContent =
+                "❌ Password is too weak.";
+
+        }
+
+        else{
+
+            message.textContent =
+                "❌ Registration failed: "+
+                error.message;
+
+        }
+
+    }
+
+};
+
+</script>
+
+</body>
+
+</html>

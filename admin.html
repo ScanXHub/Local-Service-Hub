@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel - Local Service Hub</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#222;
+}
+
+header{
+    background:linear-gradient(135deg,#111827,#1d4ed8);
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+header h1{
+    margin:0;
+}
+
+header p{
+    margin:8px 0 0;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+/* LOGIN */
+
+.login-box{
+    max-width:420px;
+    margin:50px auto;
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,.12);
+}
+
+.login-box h2{
+    text-align:center;
+    color:#1d4ed8;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    margin-bottom:14px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:15px;
+}
+
+label{
+    font-weight:bold;
+}
+
+button{
+    border:0;
+    border-radius:8px;
+    padding:11px 15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-button{
+    width:100%;
+    background:#2563eb;
+    color:white;
+    padding:13px;
+}
+
+.message{
+    text-align:center;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+/* ADMIN */
+
+#adminPanel{
+    display:none;
+}
+
+.top-bar{
+    background:white;
+    padding:18px;
+    border-radius:14px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.top-bar h2{
+    margin:0;
+    color:#1d4ed8;
+}
+
+.logout{
+    background:#dc2626;
+    color:white;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(160px,1fr));
+    gap:15px;
+    margin:20px 0;
+}
+
+.stat{
+    background:white;
+    text-align:center;
+    padding:20px;
+    border-radius:13px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.stat h3{
+    margin:0;
+    font-size:30px;
+    color:#2563eb;
+}
+
+/* SECTIONS */
+
+.section{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    margin-top:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.section h2{
+    color:#1d4ed8;
+}
+
+/* SETUP */
+
+.setup-note{
+    background:#eff6ff;
+    padding:13px;
+    border-radius:8px;
+    color:#1e40af;
+    line-height:1.5;
+}
+
+.save-button{
+    width:100%;
+    background:#2563eb;
+    color:white;
+    padding:13px;
+}
+
+.reset-button{
+    width:100%;
+    background:#dc2626;
+    color:white;
+    padding:13px;
+    margin-top:10px;
+}
+
+/* FILTERS */
+
+.filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:15px 0;
+}
+
+.filters button{
+    background:#e5e7eb;
+}
+
+.filters button.active{
+    background:#2563eb;
+    color:white;
+}
+
+/* PROVIDERS */
+
+.provider-card{
+    border:1px solid #dbe3ed;
+    padding:17px;
+    border-radius:12px;
+    margin-bottom:14px;
+}
+
+.provider-card h3{
+    margin-top:0;
+    color:#1d4ed8;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.verified{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.verify-button{
+    background:#16a34a;
+    color:white;
+}
+
+.unverify-button{
+    background:#f59e0b;
+    color:white;
+}
+
+.delete-button{
+    background:#dc2626;
+    color:white;
+}
+
+.home-button{
+    background:#e5e7eb;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:600px){
+
+    .top-bar{
+        flex-direction:column;
+    }
+
+    .top-bar button{
+        width:100%;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .actions button{
+        width:100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🛠️ Local Service Hub</h1>
+
+<p>Administrator Panel</p>
+
+</header>
+
+<!-- =====================================
+     LOGIN
+===================================== -->
+
+<div id="loginBox"
+class="login-box">
+
+<h2>🔐 Admin Login</h2>
+
+<p style="text-align:center;color:#64748b;">
+First-time login:
+</p>
+
+<p style="text-align:center;">
+<b>ID:</b> admin
+<br>
+<b>Password:</b> admin123
+</p>
+
+<label>
+Admin ID
+</label>
+
+<input
+id="adminId"
+type="text"
+placeholder="Enter Admin ID"
+
+>
+
+<label>
+Password
+</label>
+
+<input
+id="adminPassword"
+type="password"
+placeholder="Enter Password"
+
+>
+
+<button
+class="login-button"
+onclick="login()"
+
+>
+
+🔐 Login </button>
+
+<div
+id="loginMessage"
+class="message"
+></div>
+
+</div>
+
+<!-- =====================================
+     ADMIN PANEL
+===================================== -->
+
+<div
+id="adminPanel"
+class="container"
+>
+
+<div class="top-bar">
+
+<h2>📊 Admin Dashboard</h2>
+
+<div>
+
+<button
+class="home-button"
+onclick="location.href='index.html'"
+
+>
+
+🏠 Website </button>
+
+<button
+class="logout"
+onclick="logout()"
+
+>
+
+🚪 Logout </button>
+
+</div>
+
+</div>
+
+<!-- =====================================
+     STATISTICS
+===================================== -->
+
+<div class="stats">
+
+<div class="stat">
+
+<h3 id="totalProviders">
+0
+</h3>
+
+<p>Total Providers</p>
+
+</div>
+
+<div class="stat">
+
+<h3 id="pendingProviders">
+0
+</h3>
+
+<p>Pending</p>
+
+</div>
+
+<div class="stat">
+
+<h3 id="verifiedProviders">
+0
+</h3>
+
+<p>Verified</p>
+
+</div>
+
+</div>
+
+<!-- =====================================
+     OWNER SETUP
+===================================== -->
+
+<div class="section">
+
+<h2>⚙️ Owner Setup</h2>
+
+<div class="setup-note">
+
+<b>For the new project owner:</b>
+
+<br><br>
+
+Enter your own business information and create your own Admin ID and password.
+
+<br><br>
+
+After saving, use your new login details.
+
+</div>
+
+<label>
+Owner / Business Name
+</label>
+
+<input
+id="ownerName"
+type="text"
+placeholder="Example: ABC Local Services"
+
+>
+
+<label>
+Owner Phone Number
+</label>
+
+<input
+id="ownerPhone"
+type="tel"
+placeholder="10 digit mobile number"
+
+>
+
+<label>
+WhatsApp Number
+</label>
+
+<input
+id="ownerWhatsApp"
+type="tel"
+placeholder="10 digit WhatsApp number"
+
+>
+
+<label>
+Business Location
+</label>
+
+<input
+id="ownerLocation"
+type="text"
+placeholder="Example: Hubballi, Karnataka"
+
+>
+
+<hr style="margin:20px 0;border:0;border-top:1px solid #ddd;">
+
+<h3>🔐 Create Your Admin Login</h3>
+
+<label>
+New Admin ID
+</label>
+
+<input
+id="newAdminId"
+type="text"
+placeholder="Create your Admin ID"
+
+>
+
+<label>
+New Admin Password
+</label>
+
+<input
+id="newAdminPassword"
+type="password"
+placeholder="Create your password"
+
+>
+
+<label>
+Confirm Password
+</label>
+
+<input
+id="confirmPassword"
+type="password"
+placeholder="Enter password again"
+
+>
+
+<button
+class="save-button"
+onclick="saveOwnerSetup()"
+
+>
+
+💾 Save Owner Setup </button>
+
+<button
+class="reset-button"
+onclick="resetProjectData()"
+
+>
+
+⚠️ Reset Provider Data </button>
+
+<div
+id="setupMessage"
+class="message"
+></div>
+
+</div>
+
+<!-- =====================================
+     PROVIDER MANAGEMENT
+===================================== -->
+
+<div class="section">
+
+<h2>👥 Provider Verification</h2>
+
+<input
+id="providerSearch"
+type="text"
+placeholder="🔎 Search provider..."
+oninput="renderProviders()"
+
+>
+
+<div class="filters">
+
+<button
+class="active"
+onclick="changeFilter('all',this)"
+
+>
+
+All </button>
+
+<button
+onclick="changeFilter('pending',this)"
+
+>
+
+⏳ Pending </button>
+
+<button
+onclick="changeFilter('verified',this)"
+
+>
+
+🛡️ Verified </button>
+
+</div>
+
+<div id="providerList">
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* =====================================
+   DEFAULT LOGIN
+===================================== */
+
+const DEFAULT_ADMIN_ID = "admin";
+
+const DEFAULT_ADMIN_PASSWORD = "admin123";
+
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+let providers = [];
+
+let currentFilter = "all";
+
+
+/* =====================================
+   LOAD PROVIDERS
+===================================== */
+
+function loadProviders(){
+
+    try{
+
+        providers =
+            JSON.parse(
+                localStorage.getItem(
+                    "localServiceHubProviders"
+                )
+            ) || [];
+
+        if(!Array.isArray(providers)){
+
+            providers = [];
+
+        }
+
+    }
+    catch(error){
+
+        providers = [];
+
+    }
+
+    updateStats();
+
+    renderProviders();
+
+}
+
+
+/* =====================================
+   LOGIN
+===================================== */
+
+function login(){
+
+    const id =
+        document.getElementById(
+            "adminId"
+        ).value.trim();
+
+
+    const password =
+        document.getElementById(
+            "adminPassword"
+        ).value;
+
+
+    let savedLogin = null;
+
+
+    try{
+
+        savedLogin =
+            JSON.parse(
+                localStorage.getItem(
+                    "localServiceHubAdminLogin"
+                )
+            );
+
+    }
+    catch(error){
+
+        savedLogin = null;
+
+    }
+
+
+    const correctId =
+        savedLogin &&
+        savedLogin.id
+        ?
+        savedLogin.id
+        :
+        DEFAULT_ADMIN_ID;
+
+
+    const correctPassword =
+        savedLogin &&
+        savedLogin.password
+        ?
+        savedLogin.password
+        :
+        DEFAULT_ADMIN_PASSWORD;
+
+
+    const message =
+        document.getElementById(
+            "loginMessage"
+        );
+
+
+    if(
+        id === correctId &&
+        password === correctPassword
+    ){
+
+        sessionStorage.setItem(
+            "localServiceHubAdmin",
+            "true"
+        );
+
+
+        document.getElementById(
+            "loginBox"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "adminPanel"
+        ).style.display =
+            "block";
+
+
+        loadOwnerSetup();
+
+        loadProviders();
+
+
+    }
+    else{
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Invalid Admin ID or Password.";
+
+    }
+
+}
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+function logout(){
+
+    sessionStorage.removeItem(
+        "localServiceHubAdmin"
+    );
+
+
+    document.getElementById(
+        "adminPanel"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "loginBox"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "adminId"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "adminPassword"
+    ).value =
+        "";
+
+}
+
+
+/* =====================================
+   OWNER SETUP
+===================================== */
+
+function loadOwnerSetup(){
+
+    let owner = null;
+
+
+    try{
+
+        owner =
+            JSON.parse(
+                localStorage.getItem(
+                    "localServiceHubOwner"
+                )
+            );
+
+    }
+    catch(error){
+
+        owner = null;
+
+    }
+
+
+    if(!owner){
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "ownerName"
+    ).value =
+        owner.name || "";
+
+
+    document.getElementById(
+        "ownerPhone"
+    ).value =
+        owner.phone || "";
+
+
+    document.getElementById(
+        "ownerWhatsApp"
+    ).value =
+        owner.whatsapp || "";
+
+
+    document.getElementById(
+        "ownerLocation"
+    ).value =
+        owner.location || "";
+
+}
+
+
+/* =====================================
+   SAVE OWNER SETUP
+===================================== */
+
+function saveOwnerSetup(){
+
+    const name =
+        document.getElementById(
+            "ownerName"
+        ).value.trim();
+
+
+    const phone =
+        document.getElementById(
+            "ownerPhone"
+        ).value.trim();
+
+
+    const whatsapp =
+        document.getElementById(
+            "ownerWhatsApp"
+        ).value.trim();
+
+
+    const location =
+        document.getElementById(
+            "ownerLocation"
+        ).value.trim();
+
+
+    const newAdminId =
+        document.getElementById(
+            "newAdminId"
+        ).value.trim();
+
+
+    const newPassword =
+        document.getElementById(
+            "newAdminPassword"
+        ).value;
+
+
+    const confirmPassword =
+        document.getElementById(
+            "confirmPassword"
+        ).value;
+
+
+    const message =
+        document.getElementById(
+            "setupMessage"
+        );
+
+
+    if(
+        !name ||
+        !phone ||
+        !whatsapp ||
+        !location
+    ){
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Please fill all owner details.";
+
+        return;
+
+    }
+
+
+    const cleanPhone =
+        phone.replace(
+            /\D/g,
+            ""
+        );
+
+
+    const cleanWhatsApp =
+        whatsapp.replace(
+            /\D/g,
+            ""
+        );
+
+
+    if(
+        cleanPhone.length !== 10 ||
+        cleanWhatsApp.length !== 10
+    ){
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Phone numbers must contain 10 digits.";
+
+        return;
+
+    }
+
+
+    if(
+        !newAdminId ||
+        !newPassword
+    ){
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Create your Admin ID and password.";
+
+        return;
+
+    }
+
+
+    if(
+        newPassword.length < 6
+    ){
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Password must contain at least 6 characters.";
+
+        return;
+
+    }
+
+
+    if(
+        newPassword !== confirmPassword
+    ){
+
+        message.style.color =
+            "#dc2626";
+
+        message.textContent =
+            "❌ Passwords do not match.";
+
+        return;
+
+    }
+
+
+    /* SAVE OWNER */
+
+    const owner = {
+
+        name:name,
+
+        phone:cleanPhone,
+
+        whatsapp:cleanWhatsApp,
+
+        location:location
+
+    };
+
+
+    localStorage.setItem(
+        "localServiceHubOwner",
+        JSON.stringify(owner)
+    );
+
+
+    /* SAVE LOGIN */
+
+    const loginData = {
+
+        id:newAdminId,
+
+        password:newPassword
+
+    };
+
+
+    localStorage.setItem(
+        "localServiceHubAdminLogin",
+        JSON.stringify(loginData)
+    );
+
+
+    message.style.color =
+        "#15803d";
+
+    message.innerHTML =
+        "✅ Setup saved successfully!<br>"+
+        "Your new Admin ID is: <b>"+
+        escapeHTML(newAdminId)+
+        "</b>";
+
+
+    document.getElementById(
+        "newAdminPassword"
+    ).value = "";
+
+
+    document.getElementById(
+        "confirmPassword"
+    ).value = "";
+
+}
+
+
+/* =====================================
+   PROVIDER STATISTICS
+===================================== */
+
+function updateStats(){
+
+    const total =
+        providers.length;
+
+
+    const verified =
+        providers.filter(
+            function(provider){
+
+                return provider.verified === true;
+
+            }
+        ).length;
+
+
+    const pending =
+        total - verified;
+
+
+    document.getElementById(
+        "totalProviders"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "verifiedProviders"
+    ).textContent =
+        verified;
+
+
+    document.getElementById(
+        "pendingProviders"
+    ).textContent =
+        pending;
+
+}
+
+
+/* =====================================
+   FILTER
+===================================== */
+
+function changeFilter(
+    filter,
+    button
+){
+
+    currentFilter =
+        filter;
+
+
+    document.querySelectorAll(
+        ".filters button"
+    ).forEach(
+        function(btn){
+
+            btn.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    renderProviders();
+
+}
+
+
+/* =====================================
+   RENDER PROVIDERS
+===================================== */
+
+function renderProviders(){
+
+    const container =
+        document.getElementById(
+            "providerList"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    const search =
+        (
+            document.getElementById(
+                "providerSearch"
+            )?.value || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    let list =
+        providers.filter(
+            function(provider){
+
+                const text =
+
+                    (
+                        provider.name || ""
+                    ) +
+
+                    " " +
+
+                    (
+                        provider.service || ""
+                    ) +
+
+                    " " +
+
+                    (
+                        provider.location || ""
+                    );
+
+
+                const matchesSearch =
+                    text
+                    .toLowerCase()
+                    .includes(search);
+
+
+                let matchesFilter =
+                    true;
+
+
+                if(
+                    currentFilter ===
+                    "pending"
+                ){
+
+                    matchesFilter =
+                        provider.verified !== true;
+
+                }
+
+
+                if(
+                    currentFilter ===
+                    "verified"
+                ){
+
+                    matchesFilter =
+                        provider.verified === true;
+
+                }
+
+
+                return (
+                    matchesSearch &&
+                    matchesFilter
+                );
+
+            }
+        );
+
+
+    container.innerHTML = "";
+
+
+    if(!list.length){
+
+        container.innerHTML =
+            "<p style='text-align:center;color:#64748b;'>"+
+            "😔 No providers found."+
+            "</p>";
+
+        return;
+
+    }
+
+
+    list.forEach(
+        function(provider){
+
+            const index =
+                providers.indexOf(
+                    provider
+                );
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "provider-card";
+
+
+            const statusClass =
+                provider.verified
+                ?
+                "verified"
+                :
+                "pending";
+
+
+            const statusText =
+                provider.verified
+                ?
+                "🛡️ VERIFIED"
+                :
+                "⏳ PENDING";
+
+
+            card.innerHTML =
+
+                "<h3>👤 "+
+                escapeHTML(
+                    provider.name ||
+                    "Service Provider"
+                )+
+                "</h3>"+
+
+                "<span class='badge "+
+                statusClass+
+                "'>"+
+                statusText+
+                "</span>"+
+
+                "<p>🛠️ <b>Service:</b> "+
+                escapeHTML(
+                    provider.service
+                )+
+                "</p>"+
+
+                "<p>📍 <b>Location:</b> "+
+                escapeHTML(
+                    provider.location
+                )+
+                "</p>"+
+
+                "<p>📞 <b>Phone:</b> "+
+                escapeHTML(
+                    provider.phone
+                )+
+                "</p>"+
+
+                "<p>🏆 <b>Experience:</b> "+
+                escapeHTML(
+                    provider.experience ||
+                    "Not provided"
+                )+
+                "</p>"+
+
+                "<p>💰 <b>Price:</b> "+
+                escapeHTML(
+                    provider.price ||
+                    "Contact provider"
+                )+
+                "</p>"+
+
+                "<p>📝 <b>About:</b> "+
+                escapeHTML(
+                    provider.about ||
+                    "Not provided"
+                )+
+                "</p>";
+
+
+            const actions =
+                document.createElement(
+                    "div"
+                );
+
+
+            actions.className =
+                "actions";
+
+
+            const verifyButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            if(
+                provider.verified === true
+            ){
+
+                verifyButton.className =
+                    "unverify-button";
+
+                verifyButton.textContent =
+                    "↩️ Unverify";
+
+            }
+            else{
+
+                verifyButton.className =
+                    "verify-button";
+
+                verifyButton.textContent =
+                    "🛡️ Verify";
+
+            }
+
+
+            verifyButton.onclick =
+                function(){
+
+                    toggleVerification(
+                        index
+                    );
+
+                };
+
+
+            actions.appendChild(
+                verifyButton
+            );
+
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.className =
+                "delete-button";
+
+            deleteButton.textContent =
+                "🗑️ Delete";
+
+
+            deleteButton.onclick =
+                function(){
+
+                    deleteProvider(
+                        index
+                    );
+
+                };
+
+
+            actions.appendChild(
+                deleteButton
+            );
+
+
+            card.appendChild(
+                actions
+            );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   VERIFY / UNVERIFY
+===================================== */
+
+function toggleVerification(
+    index
+){
+
+    if(!providers[index]){
+
+        return;
+
+    }
+
+
+    providers[index].verified =
+        !providers[index].verified;
+
+
+    saveProviders();
+
+
+    if(
+        providers[index].verified
+    ){
+
+        alert(
+            "🛡️ Provider verified successfully!"
+        );
+
+    }
+    else{
+
+        alert(
+            "↩️ Provider verification removed."
+        );
+
+    }
+
+
+    updateStats();
+
+    renderProviders();
+
+}
+
+
+/* =====================================
+   DELETE
+===================================== */
+
+function deleteProvider(
+    index
+){
+
+    if(!providers[index]){
+
+        return;
+
+    }
+
+
+    const name =
+        providers[index].name ||
+        "this provider";
+
+
+    if(
+        !confirm(
+            "Delete "+name+
+            " permanently?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    providers.splice(
+        index,
+        1
+    );
+
+
+    saveProviders();
+
+    updateStats();
+
+    renderProviders();
+
+}
+
+
+/* =====================================
+   SAVE PROVIDERS
+===================================== */
+
+function saveProviders(){
+
+    localStorage.setItem(
+        "localServiceHubProviders",
+        JSON.stringify(
+            providers
+        )
+    );
+
+}
+
+
+/* =====================================
+   RESET PROVIDER DATA
+===================================== */
+
+function resetProjectData(){
+
+    const answer =
+        confirm(
+            "⚠️ This will delete ALL registered providers. Continue?"
+        );
+
+
+    if(!answer){
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "localServiceHubProviders"
+    );
+
+
+    providers = [];
+
+
+    updateStats();
+
+    renderProviders();
+
+
+    const message =
+        document.getElementById(
+            "setupMessage"
+        );
+
+
+    message.style.color =
+        "#15803d";
+
+    message.textContent =
+        "✅ All provider data has been cleared.";
+
+}
+
+
+/* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value || ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =====================================
+   ENTER KEY LOGIN
+===================================== */
+
+document.getElementById(
+    "adminPassword"
+).addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter"
+        ){
+
+            login();
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   AUTO LOGIN SESSION
+===================================== */
+
+if(
+    sessionStorage.getItem(
+        "localServiceHubAdmin"
+    ) === "true"
+){
+
+    document.getElementById(
+        "loginBox"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "adminPanel"
+    ).style.display =
+        "block";
+
+}
+
+
+/* =====================================
+   START
+===================================== */
+
+loadOwnerSetup();
+
+loadProviders();
+
+</script>
+
+</body>
+
+</html>

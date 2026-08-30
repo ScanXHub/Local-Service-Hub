@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Provider Dashboard - Local Service Hub</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* ================= DASHBOARD ================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+}
+
+
+/* HEADER */
+
+.dashboard-header {
+    background: #111827;
+    color: white;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+
+.dashboard-logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+.logout-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+/* MAIN */
+
+.dashboard-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+
+/* WELCOME */
+
+.welcome-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+
+.welcome-box h1 {
+    margin-top: 0;
+}
+
+
+/* CARDS */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 20px;
+}
+
+
+.info-card {
+    background: white;
+    padding: 22px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+
+.info-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+
+.info-card h3 {
+    margin: 5px 0 10px;
+}
+
+
+.info-card p {
+    margin: 6px 0;
+    color: #555;
+}
+
+
+/* REQUESTS */
+
+.requests-section {
+    background: white;
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+
+.request-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 15px;
+}
+
+
+.request-card h3 {
+    margin-top: 0;
+}
+
+
+.request-status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #fef3c7;
+    color: #92400e;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+
+.request-buttons {
+    margin-top: 15px;
+}
+
+
+.request-buttons button {
+    border: none;
+    padding: 9px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 4px;
+    color: white;
+}
+
+
+.call-btn {
+    background: #16a34a;
+}
+
+
+.whatsapp-btn {
+    background: #25d366;
+}
+
+
+.complete-btn {
+    background: #2563eb;
+}
+
+
+.no-requests {
+    text-align: center;
+    padding: 25px;
+    color: #777;
+}
+
+
+/* HOME BUTTON */
+
+.home-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 11px 18px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .dashboard-header {
+        padding: 15px;
+    }
+
+    .dashboard-container {
+        padding: 15px;
+    }
+
+    .dashboard-logo {
+        font-size: 18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="dashboard-header">
+
+<div class="dashboard-logo">
+    🛠️ Local Service Hub
+</div>
+
+<button
+class="logout-btn"
+onclick="logoutProvider()"
+
+>
+
+
+🚪 Logout
+
+
+</button>
+
+</header>
+
+<!-- ================= MAIN ================= -->
+
+<main class="dashboard-container">
+
+<!-- WELCOME -->
+
+<section class="welcome-box">
+
+<h1>
+    👋 Welcome, <span id="providerName">Provider</span>!
+</h1>
+
+<p>
+    Manage your Local Service Hub provider account
+    and customer requests from here.
+</p>
+
+</section>
+
+<!-- ================= PROVIDER INFORMATION ================= -->
+
+<section class="dashboard-grid">
+
+<div class="info-card">
+
+<div class="info-icon">
+    👤
+</div>
+
+<h3>
+    Name
+</h3>
+
+<p id="infoName">
+    Loading...
+</p>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-icon">
+    🛠️
+</div>
+
+<h3>
+    Service
+</h3>
+
+<p id="infoService">
+    Loading...
+</p>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-icon">
+    📱
+</div>
+
+<h3>
+    Mobile Number
+</h3>
+
+<p id="infoPhone">
+    Loading...
+</p>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-icon">
+    📍
+</div>
+
+<h3>
+    Location
+</h3>
+
+<p id="infoLocation">
+    Loading...
+</p>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-icon">
+    🏆
+</div>
+
+<h3>
+    Experience
+</h3>
+
+<p id="infoExperience">
+    Loading...
+</p>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-icon">
+    📋
+</div>
+
+<h3>
+    Customer Requests
+</h3>
+
+<p id="requestCount">
+    0
+</p>
+
+</div>
+
+</section>
+
+<!-- ================= CUSTOMER REQUESTS ================= -->
+
+<section class="requests-section">
+
+<h2>
+    📋 Customer Service Requests
+</h2>
+
+<p>
+    Requests for your registered service will appear here.
+</p>
+
+<div id="requestsList">
+
+<div class="no-requests">
+    Loading requests...
+</div>
+
+</div>
+
+</section>
+
+<a
+href="index.html"
+class="home-btn"
+
+>
+
+
+🏠 Back to Home
+
+
+</a>
+
+</main>
+
+<script>
+
+
+/* =====================================================
+   LOAD PROVIDER
+===================================================== */
+
+var currentProvider = null;
+
+
+function loadProvider() {
+
+
+    var loggedIn =
+        localStorage.getItem(
+            "localServiceHubLoggedIn"
+        );
+
+
+    var savedUser =
+        localStorage.getItem(
+            "localServiceHubUser"
+        );
+
+
+    /*
+     * Check login
+     */
+
+    if (
+        loggedIn !== "true" ||
+        !savedUser
+    ) {
+
+        alert(
+            "🔐 Please login first."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    try {
+
+        currentProvider =
+            JSON.parse(
+                savedUser
+            );
+
+    } catch (error) {
+
+        alert(
+            "❌ Provider account data is invalid."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    /*
+     * Make sure this is a provider
+     */
+
+    if (
+        currentProvider.type !==
+        "provider"
+    ) {
+
+        alert(
+            "❌ This dashboard is only for service providers."
+        );
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
+
+
+    /*
+     * Display information
+     */
+
+    document.getElementById(
+        "providerName"
+    ).innerText =
+        currentProvider.name ||
+        "Provider";
+
+
+    document.getElementById(
+        "infoName"
+    ).innerText =
+        currentProvider.name ||
+        "Not available";
+
+
+    document.getElementById(
+        "infoService"
+    ).innerText =
+        currentProvider.service ||
+        "Not available";
+
+
+    document.getElementById(
+        "infoPhone"
+    ).innerText =
+        currentProvider.phone ||
+        "Not available";
+
+
+    document.getElementById(
+        "infoLocation"
+    ).innerText =
+        currentProvider.location ||
+        "Not available";
+
+
+    document.getElementById(
+        "infoExperience"
+    ).innerText =
+        currentProvider.experience ||
+        "Not available";
+
+
+    loadRequests();
+
+}
+
+
+/* =====================================================
+   LOAD CUSTOMER REQUESTS
+===================================================== */
+
+function loadRequests() {
+
+
+    var requestStorage =
+        localStorage.getItem(
+            "localServiceHubRequests"
+        );
+
+
+    var requests = [];
+
+
+    if (requestStorage) {
+
+        try {
+
+            requests =
+                JSON.parse(
+                    requestStorage
+                );
+
+
+            if (
+                !Array.isArray(
+                    requests
+                )
+            ) {
+
+                requests = [];
+
+            }
+
+        } catch (error) {
+
+            requests = [];
+
+        }
+
+    }
+
+
+    /*
+     * Only show requests matching
+     * this provider's service.
+     */
+
+    var providerService =
+        String(
+            currentProvider.service || ""
+        )
+        .toLowerCase();
+
+
+    var providerName =
+        String(
+            currentProvider.name || ""
+        )
+        .toLowerCase();
+
+
+    var matchingRequests =
+        requests.filter(
+            function(request) {
+
+                var requestService =
+                    String(
+                        request.service || ""
+                    )
+                    .toLowerCase();
+
+
+                var requestProvider =
+                    String(
+                        request.provider || ""
+                    )
+                    .toLowerCase();
+
+
+                /*
+                 * Show request when:
+                 *
+                 * 1. Service matches provider service
+                 *
+                 * OR
+                 *
+                 * 2. Customer specifically selected provider
+                 */
+
+                return (
+                    requestService ===
+                    providerService
+                )
+                ||
+                (
+                    requestProvider !== "" &&
+                    requestProvider ===
+                    providerName
+                );
+
+            }
+        );
+
+
+    document.getElementById(
+        "requestCount"
+    ).innerText =
+        matchingRequests.length;
+
+
+    var list =
+        document.getElementById(
+            "requestsList"
+        );
+
+
+    list.innerHTML =
+        "";
+
+
+    if (
+        matchingRequests.length === 0
+    ) {
+
+        list.innerHTML =
+
+            "<div class='no-requests'>" +
+
+            "📭 No customer requests yet." +
+
+            "<br><br>" +
+
+            "New requests for " +
+
+            "<strong>" +
+
+            (
+                currentProvider.service ||
+                "your service"
+            ) +
+
+            "</strong> will appear here." +
+
+            "</div>";
+
+        return;
+
+    }
+
+
+    matchingRequests
+    .slice()
+    .reverse()
+    .forEach(
+        function(request) {
+
+
+            var phone =
+                request.phone || "";
+
+
+            var safePhone =
+                phone.replace(
+                    /'/g,
+                    ""
+                );
+
+
+            var safeName =
+                String(
+                    request.name || "Customer"
+                )
+                .replace(
+                    /'/g,
+                    "\\'"
+                );
+
+
+            var requestStatus =
+                request.status ||
+                "Pending";
+
+
+            list.innerHTML += `
+
+                <div class="request-card">
+
+                    <h3>
+                        👤 ${request.name || "Customer"}
+                    </h3>
+
+                    <p>
+                        📱 <strong>Phone:</strong>
+                        ${request.phone || "Not provided"}
+                    </p>
+
+                    <p>
+                        📍 <strong>Location:</strong>
+                        ${request.location || "Not provided"}
+                    </p>
+
+                    <p>
+                        🛠️ <strong>Service:</strong>
+                        ${request.service || "Not specified"}
+                    </p>
+
+                    <p>
+                        📝 <strong>Problem:</strong>
+                        ${request.problem || "Not specified"}
+                    </p>
+
+                    <p>
+                        📅 <strong>Preferred Date:</strong>
+                        ${request.date || "Not specified"}
+                    </p>
+
+                    <p>
+                        🕒 <strong>Request Time:</strong>
+                        ${request.createdAt || "Not available"}
+                    </p>
+
+                    <p>
+                        📋 <strong>Request ID:</strong>
+                        ${request.id || "Not available"}
+                    </p>
+
+                    <p>
+                        <span class="request-status">
+                            ${requestStatus}
+                        </span>
+                    </p>
+
+
+                    <div class="request-buttons">
+
+
+                        ${
+                            safePhone
+                            ?
+                            `
+                            <button
+                                class="call-btn"
+                                onclick="callCustomer('${safePhone}')"
+                            >
+                                📞 Call Customer
+                            </button>
+                            `
+                            :
+                            ""
+                        }
+
+
+                        ${
+                            safePhone
+                            ?
+                            `
+                            <button
+                                class="whatsapp-btn"
+                                onclick="whatsappCustomer('${safeName}', '${safePhone}')"
+                            >
+                                💬 WhatsApp Customer
+                            </button>
+                            `
+                            :
+                            ""
+                        }
+
+
+                        <button
+                            class="complete-btn"
+                            onclick="completeRequest('${request.id || ""}')"
+                        >
+                            ✅ Mark Completed
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CALL CUSTOMER
+===================================================== */
+
+function callCustomer(phone) {
+
+
+    if (!phone) {
+
+        alert(
+            "📱 Customer phone number is not available."
+        );
+
+        return;
+
+    }
+
+
+    var cleanPhone =
+        phone.replace(
+            /\D/g,
+            ""
+        );
+
+
+    window.location.href =
+        "tel:" +
+        cleanPhone;
+
+}
+
+
+/* =====================================================
+   WHATSAPP CUSTOMER
+===================================================== */
+
+function whatsappCustomer(
+    name,
+    phone
+) {
+
+
+    if (!phone) {
+
+        alert(
+            "📱 Customer phone number is not available."
+        );
+
+        return;
+
+    }
+
+
+    var cleanPhone =
+        phone.replace(
+            /\D/g,
+            ""
+        );
+
+
+    if (
+        cleanPhone.length === 10
+    ) {
+
+        cleanPhone =
+            "91" +
+            cleanPhone;
+
+    }
+
+
+    var message =
+        "Hello " +
+        name +
+        ", I am a service provider from Local Service Hub regarding your service request.";
+
+
+    var url =
+        "https://wa.me/" +
+        cleanPhone +
+        "?text=" +
+        encodeURIComponent(
+            message
+        );
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
+   MARK REQUEST COMPLETED
+===================================================== */
+
+function completeRequest(
+    requestId
+) {
+
+
+    if (!requestId) {
+
+        alert(
+            "❌ Request ID not available."
+        );
+
+        return;
+
+    }
+
+
+    var requestStorage =
+        localStorage.getItem(
+            "localServiceHubRequests"
+        );
+
+
+    if (!requestStorage) {
+
+        return;
+
+    }
+
+
+    var requests;
+
+
+    try {
+
+        requests =
+            JSON.parse(
+                requestStorage
+            );
+
+    } catch (error) {
+
+        return;
+
+    }
+
+
+    requests.forEach(
+        function(request) {
+
+            if (
+                String(request.id) ===
+                String(requestId)
+            ) {
+
+                request.status =
+                    "Completed";
+
+            }
+
+        }
+    );
+
+
+    localStorage.setItem(
+        "localServiceHubRequests",
+        JSON.stringify(
+            requests
+        )
+    );
+
+
+    /*
+     * Keep old single-request
+     * storage updated too.
+     */
+
+    if (
+        requests.length > 0
+    ) {
+
+        localStorage.setItem(
+            "localServiceHubRequest",
+            JSON.stringify(
+                requests[
+                    requests.length - 1
+                ]
+            )
+        );
+
+    }
+
+
+    alert(
+        "✅ Service request marked as completed."
+    );
+
+
+    loadRequests();
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logoutProvider() {
+
+
+    localStorage.removeItem(
+        "localServiceHubLoggedIn"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+window.onload =
+    function() {
+
+        loadProvider();
+
+    };
+
+
+</script>
+
+</body>
+
+</html>

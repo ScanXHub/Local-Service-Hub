@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login - Local Service Hub</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.login-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.login-icon {
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+.login-box h1 {
+    margin: 10px 0;
+}
+
+.login-box p {
+    color: #666;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    opacity: 0.9;
+}
+
+#loginMessage {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #ffe5e5;
+    color: #c00;
+}
+
+.back-home {
+    margin-top: 20px;
+}
+
+.back-home a {
+    text-decoration: none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<section class="login-section">
+
+<div class="login-box">
+
+<div class="login-icon">
+    🛠️
+</div>
+
+<h1>
+    Local Service Hub
+</h1>
+
+<p>
+    Login to your account
+</p>
+
+<form id="loginForm">
+
+    <input
+        type="email"
+        id="loginEmail"
+        placeholder="Email Address"
+        autocomplete="email"
+        required
+    >
+
+    <input
+        type="password"
+        id="loginPassword"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+    >
+
+    <button type="submit">
+        🔐 Login
+    </button>
+
+</form>
+
+<div id="loginMessage"></div>
+
+<p class="back-home">
+    <a href="index.html">
+        ← Back to Home
+    </a>
+</p>
+
+</div>
+
+</section>
+
+<script>
+
+document
+.getElementById("loginForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    var email =
+        document
+        .getElementById("loginEmail")
+        .value
+        .trim()
+        .toLowerCase();
+
+    var password =
+        document
+        .getElementById("loginPassword")
+        .value;
+
+    var message =
+        document
+        .getElementById("loginMessage");
+
+
+    message.style.display = "none";
+
+
+    /* GET REGISTERED USER */
+
+    var savedUser =
+        localStorage.getItem(
+            "localServiceHubUser"
+        );
+
+
+    if (!savedUser) {
+
+        message.innerHTML =
+            "❌ No account found.<br><br>" +
+            "Please register first.";
+
+        message.style.display =
+            "block";
+
+        return;
+    }
+
+
+    /* READ USER */
+
+    var user;
+
+    try {
+
+        user = JSON.parse(savedUser);
+
+    } catch (error) {
+
+        message.innerHTML =
+            "❌ Account data is corrupted.<br><br>" +
+            "Please register again.";
+
+        message.style.display =
+            "block";
+
+        return;
+    }
+
+
+    /* CHECK LOGIN */
+
+    var savedEmail =
+        String(user.email)
+        .trim()
+        .toLowerCase();
+
+    var savedPassword =
+        String(user.password);
+
+
+    if (
+        email === savedEmail &&
+        password === savedPassword
+    ) {
+
+        /* SAVE LOGIN STATUS */
+
+        localStorage.setItem(
+            "localServiceHubLoggedIn",
+            "true"
+        );
+
+        localStorage.setItem(
+            "localServiceHubCurrentUser",
+            JSON.stringify(user)
+        );
+
+
+        /* SUCCESS MESSAGE */
+
+        message.innerHTML =
+            "✅ Login successful!<br><br>" +
+            "Welcome, <strong>" +
+            user.name +
+            "</strong>!";
+
+        message.style.display =
+            "block";
+
+
+        /*
+         * OPEN DASHBOARD
+         *
+         * If dashboard files exist,
+         * open them.
+         */
+
+        setTimeout(function() {
+
+            if (
+                user.type === "provider"
+            ) {
+
+                window.location.href =
+                    "provider-dashboard.html";
+
+            } else {
+
+                window.location.href =
+                    "customer-dashboard.html";
+
+            }
+
+        }, 700);
+
+    } else {
+
+        message.innerHTML =
+            "❌ Invalid email or password.";
+
+        message.style.display =
+            "block";
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
