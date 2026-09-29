@@ -1,301 +1,337 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Local Service Hub</title>
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f4f7fb;color:#222}
-header{background:linear-gradient(135deg,#1d4ed8,#2563eb);color:white;text-align:center;padding:28px 15px}
-header h1{margin:0;font-size:30px}
-header p{margin:8px 0 0}
-nav{background:white;padding:12px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;box-shadow:0 2px 8px #ddd}
-button{cursor:pointer;border:0;border-radius:8px;font-weight:bold}
-nav button{padding:11px 15px;background:#e5e7eb}
-.hero{text-align:center;padding:30px 15px 15px}
-.hero h2{color:#1e40af}
-.search{max-width:850px;margin:auto;padding:15px}
-.search-row{display:flex;gap:10px}
-.search input{flex:1;padding:14px;border:1px solid #ccc;border-radius:10px;font-size:16px}
-.search button{padding:14px 20px;background:#2563eb;color:white}
-.location{width:100%;margin-top:10px;padding:11px;background:white;border:1px solid #2563eb;color:#2563eb}
-#locationStatus{text-align:center;color:#64748b;font-size:14px;margin:8px}
-.categories{max-width:1100px;margin:10px auto;padding:15px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
-.category{background:white;padding:18px 8px;text-align:center;border-radius:12px;box-shadow:0 3px 10px #ddd;cursor:pointer}
-.providers{max-width:1100px;margin:20px auto;padding:15px}
-.providers h2{color:#1e40af}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}
-.card{background:white;padding:18px;border-radius:15px;box-shadow:0 4px 14px #ddd}
-.photo{width:90px;height:90px;border-radius:50%;object-fit:cover;display:block;margin:auto;border:4px solid #dbeafe}
-.card h3{text-align:center;color:#1d4ed8}
-.badge{display:block;width:max-content;margin:8px auto;padding:5px 10px;border-radius:20px;background:#dcfce7;color:#15803d;font-size:12px;font-weight:bold}
-.info{line-height:1.7}
-.view{width:100%;padding:12px;margin-top:10px;background:#2563eb;color:white}
-.empty{text-align:center;background:white;padding:30px;border-radius:12px;color:#64748b}
-footer{margin-top:40px;background:#111827;color:white;text-align:center;padding:25px}
-.modal{display:none;position:fixed;inset:0;background:#0009;z-index:999;justify-content:center;align-items:center;padding:15px}
-.modalbox{background:white;width:100%;max-width:480px;max-height:90vh;overflow:auto;padding:25px;border-radius:16px;position:relative}
-.close{position:absolute;right:10px;top:10px;background:#fee2e2;color:#dc2626;width:35px;height:35px;border-radius:50%;font-size:22px}
-.modalbox h2{text-align:center;color:#1d4ed8}
-.modalinfo{line-height:1.8;white-space:pre-line;background:#f8fafc;padding:15px;border-radius:10px}
-.actions{display:flex;gap:10px;margin-top:15px}
-.actions button{flex:1;padding:13px;color:white}
-.call{background:#16a34a}
-.whatsapp{background:#22c55e}
-@media(max-width:600px){
-.search-row{flex-direction:column}
-nav{display:grid;grid-template-columns:1fr 1fr}
-.actions{flex-direction:column}
-}
-</style>
-
+    <title>Smart Scan Hub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
+<meta name="google-site-verification" content="YmeCKkMcAI5yaz8KMu_KvdzpV1WGkL0eqY6i0uDB55s" />
 <body>
 
-<header>
-<h1>🛠️ Local Service Hub</h1>
-<p>Find trusted local service providers</p>
-</header>
-
-<nav>
-<button onclick="findServices()">🔎 Find Services</button>
-<button onclick="location.href='register.html'">📝 Register as Provider</button>
-</nav>
-
-<section class="hero">
-<h2>Find Local Services Near You</h2>
-<p>Only admin-verified providers are displayed.</p>
-</section>
-
-<section class="search">
-<div class="search-row">
-<input id="search" placeholder="Search electrician, plumber, tutor..." oninput="searchProviders()">
-<button onclick="searchProviders()">🔎 Search</button>
+<div style="
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    z-index: 9999;
+">
+    <img src="logoo.png"
+         alt="Smart service hub"
+         style="
+             width: 100px;
+             height: 100px;
+             object-fit: contain;
+             display: block;
+         ">
 </div>
 
-<button class="location" onclick="getLocation()">📍 Use My Location</button>
+     <header class="hero">
+	 
+	       <h1>ѕмαят ѕ¢αNηer нυв </h1>
+		   
+		   <p>
+		   ꜱᴄᴀɴ Qʀ ᴄᴏᴅᴇꜱ, ᴄʀᴇᴀᴛᴇ Qʀ ᴄᴏᴅᴇꜱ 
+		   ᴀɴᴅ ᴍᴀɴᴀɢᴇ ʏᴏᴜʀ Qʀ ʜɪꜱᴛᴏʀʏ ɪɴ ᴏɴᴇ ꜱɪᴍᴘʟᴇ ᴘʟᴀᴄᴇ
+		   </p>
+		   <div class="hero-buttons">
+		   
+      <button onclick="window.location.href='qr-scanner.html'">
+    👁 Start Scanning
+</button>
 
-<div id="locationStatus">Location is optional. Search works without it.</div>
+<button onclick="window.location.href='qr-generator.html'">
+    ⚡ Create QR Code
+</button>
+
+    
+
+    <h2>Our Tools</h2>
+
+    <button onclick="window.location.href='qr-scanner.html'">
+    🩻 QR Scanner
+</button>
+    <button onclick="window.location.href='qr-generator.html'">
+    ⛆ QR Generator
+</button>
+<button onclick="window.location.href='history.html'">
+    🫆 Scan History
+</button>
+<button onclick="window.location.href='generatorhistory.html'">
+    🎯Generator History
+</button>
+<button onclick="window.location.href='feedback.html'">
+    📩Feedback
+</button>
+<button onclick="window.location.href='contact.html'">
+    ☎Contact
+</button>
+    
+	<script src="script.js"></script>
+	
+	<section class="about">
+    <h2>About Smart Scan Hub</h2>
+
+    <p>
+        Smart Scan Hub is a simple and user-friendly tool
+        for scanning and generating QR codes.
+    </p>
 </section>
+<section class="features">
 
-<div class="categories">
-<div class="category" onclick="category('Electrician')">⚡<br>Electrician</div>
-<div class="category" onclick="category('Plumber')">🔧<br>Plumber</div>
-<div class="category" onclick="category('Tutor')">📚<br>Tutor</div>
-<div class="category" onclick="category('Carpenter')">🪚<br>Carpenter</div>
-<div class="category" onclick="category('Mechanic')">🔩<br>Mechanic</div>
-<div class="category" onclick="category('Painter')">🎨<br>Painter</div>
-</div>
+    <h2>Our Features</h2>
 
-<section class="providers" id="providerSection">
-<h2>🛡️ Verified Providers</h2>
-<div id="grid" class="grid"></div>
+    <div class="feature-box">
+
+        <div>
+            <h3>📷 QR Scanner</h3>
+            <p>Scan QR codes quickly using your camera.</p>
+        </div>
+
+        <div>
+            <h3>⚡ QR Generator</h3>
+            <p>Create QR codes from text or URLs.</p>
+        </div>
+
+        <div>
+            <h3>🕘 Scan History</h3>
+            <p>Keep track of your previously scanned QR codes.</p>
+        </div>
+
+        <div>
+            <h3>💾 Download</h3>
+            <p>Download your QR codes and history for later use.</p>
+        </div>
+
+    </div>
+
 </section>
+<section class="how-it-works">
 
+    <h2>How It Works</h2>
+
+    <div class="steps">
+
+        <div>
+            <h3>1️⃣ Choose a Tool</h3>
+            <p>Select QR Scanner or QR Generator.</p>
+        </div>
+
+        <div>
+            <h3>2️⃣ Scan or Generate</h3>
+            <p>Scan a QR code or enter text to create one.</p>
+        </div>
+
+        <div>
+            <h3>3️⃣ Save Your Result</h3>
+            <p>Copy, download, or view your history.</p>
+        </div>
+
+    </div>
+
+</section>
+<section class="quick-access">
+
+    <h2>Quick Access</h2>
+
+    <div class="quick-buttons">
+
+        <button onclick="window.location.href='qrscanner.html'">
+            📷 Scan QR
+        </button>
+
+        <button onclick="window.location.href='qrgenerator.html'">
+            ⚡ Generate QR
+        </button>
+
+        <button onclick="window.location.href='history.html'">
+            🕘 Scan History
+        </button>
+
+        <button onclick="window.location.href='generatorhistory.html'">
+            📋 Generator History
+        </button>
+
+        <button onclick="window.location.href='feedback.html'">
+            💬 Feedback
+        </button>
+
+        <button onclick="window.location.href='contact.html'">
+            📧 Contact
+        </button>
+
+    </div>
+
+</section>
+<section class="why-section">
+
+    <h2>Why Smart Scan Hub?</h2>
+
+    <div class="why-box">
+
+        <div>
+            <h3>🚀 Fast</h3>
+            <p>Quickly scan and generate QR codes.</p>
+        </div>
+
+        <div>
+            <h3>🔒 Private</h3>
+            <p>Your history is stored locally in your browser.</p>
+        </div>
+
+        <div>
+            <h3>📱 Easy to Use</h3>
+            <p>Designed to work on computers and mobile devices.</p>
+        </div>
+
+    </div>
+
+</section>
+<section class="contact">
+
+    <h2>Contact & Feedback</h2>
+
+    <p>Have a suggestion or found a problem? Let us know.</p>
+
+    <input
+        type="text"
+        id="feedbackName"
+        placeholder="Your Name"
+    >
+
+    <br><br>
+
+    <textarea
+        id="feedbackText"
+        placeholder="Write your feedback"
+        rows="5"
+    ></textarea>
+
+    <br><br>
+
+    <button onclick="submitFeedback()">
+        Submit Feedback
+    </button>
+
+    <p id="feedbackMessage"></p>
+
+</section>
+<section class="privacy">
+
+    <h2>Privacy</h2>
+
+    <p>
+        Your QR scan and generator history is stored locally
+        in your browser. Smart Scan Hub does not send your
+        history to a server.
+    </p>
+
+</section>
+<section class="qr-tips">
+
+    <h2>QR Code Tips</h2>
+
+    <div class="tips-box">
+
+        <div>
+            <h3>📱 Keep it Clear</h3>
+            <p>
+                Make sure the QR code is clearly visible
+                when scanning.
+            </p>
+        </div>
+
+        <div>
+            <h3>💡 Good Lighting</h3>
+            <p>
+                Use enough light so your camera can
+                recognize the QR code easily.
+            </p>
+        </div>
+
+        <div>
+            <h3>🔍 Check the Result</h3>
+            <p>
+                Always check the scanned information
+                before opening unknown links.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+<section class="about-project">
+
+    <h2>About Smart Scan Hub</h2>
+
+    <p>
+        Smart Scan Hub is a simple web-based QR code utility
+        that allows users to scan QR codes and generate QR
+        codes quickly.
+    </p>
+
+    <p>
+        Users can copy, download, share, and manage their
+        QR activity through the history features.
+    </p>
+
+    <p>
+        The project is designed to be simple, fast,
+        user-friendly, and mobile-friendly.
+    </p>
+
+</section>
+<section class="project-status">
+
+    <h2>Project Status</h2>
+
+    <div class="status-box">
+
+        <h3>✅ Ready to Use</h3>
+
+        <p>
+            Smart Scan Hub is ready for QR scanning,
+            QR generation, history management,
+            copying, downloading, and sharing.
+        </p>
+
+    </div>
+
+</section>
 <footer>
-<p>© 2026 Local Service Hub</p>
-<p>Connecting customers with trusted local services.</p>
+<button id="topButton" onclick="scrollToTop()">
+    ⬆️ Back to Top
+</button>
+
+    <h3>Smart Scan Hub</h3>
+
+    <p>
+        Your simple QR scanning and generation platform.
+    </p>
+
+    <div class="footer-links">
+
+        <button onclick="window.location.href='index.html'">
+            Home
+        </button>
+
+        <button onclick="window.location.href='qrscanner.html'">
+            QR Scanner
+        </button>
+
+        <button onclick="window.location.href='qrgenerator.html'">
+            QR Generator
+        </button>
+
+        <button onclick="window.location.href='contact.html'">
+            Contact
+        </button>
+
+    </div>
+
+    <p class="copyright">
+        © 2026 Smart Scan Hub. All Rights Reserved.
+    </p>
+
 </footer>
-
-<div id="modal" class="modal">
-<div class="modalbox">
-<button class="close" onclick="closeModal()">×</button>
-<img id="mPhoto" class="photo">
-<h2 id="mName"></h2>
-<div id="mRating" style="text-align:center"></div>
-<div id="mInfo" class="modalinfo"></div>
-<div class="actions">
-<button class="call" onclick="callProvider()">📞 Call</button>
-<button class="whatsapp" onclick="whatsappProvider()">💬 WhatsApp</button>
-</div>
-</div>
-</div>
-
-<script>
-
-let providers=[];
-let selectedProvider=null;
-
-function load(){
-try{
-providers=JSON.parse(localStorage.getItem("localServiceHubProviders"))||[];
-if(!Array.isArray(providers))providers=[];
-}catch(e){providers=[]}
-display(providers.filter(p=>p.verified===true));
-}
-
-function display(list){
-const grid=document.getElementById("grid");
-grid.innerHTML="";
-
-if(!list.length){
-grid.innerHTML='<div class="empty">🔍 No verified provider found.<br><br>Providers appear here after admin verification.</div>';
-return;
-}
-
-list.forEach(p=>{
-const card=document.createElement("div");
-card.className="card";
-
-if(p.photo){
-const img=document.createElement("img");
-img.className="photo";
-img.src=p.photo;
-card.appendChild(img);
-}
-
-const h=document.createElement("h3");
-h.textContent=p.name||"Service Provider";
-card.appendChild(h);
-
-const badge=document.createElement("span");
-badge.className="badge";
-badge.textContent="🛡️ VERIFIED";
-card.appendChild(badge);
-
-const info=document.createElement("div");
-info.className="info";
-info.innerHTML=
-"🛠️ <b>Service:</b> "+safe(p.service)+
-"<br>📍 <b>Location:</b> "+safe(p.location)+
-"<br>🏆 <b>Experience:</b> "+safe(p.experience)+
-"<br>💰 <b>Price:</b> "+safe(p.price);
-card.appendChild(info);
-
-const btn=document.createElement("button");
-btn.className="view";
-btn.textContent="👁️ View Provider";
-btn.onclick=()=>viewProvider(p);
-card.appendChild(btn);
-
-grid.appendChild(card);
-});
-}
-
-function searchProviders(){
-const q=document.getElementById("search").value.toLowerCase().trim();
-
-const verified=providers.filter(p=>p.verified===true);
-
-if(!q){
-display(verified);
-return;
-}
-
-display(verified.filter(p=>
-((p.name||"")+" "+(p.service||"")+" "+(p.location||"")+" "+(p.experience||""))
-.toLowerCase().includes(q)
-));
-}
-
-function category(c){
-document.getElementById("search").value=c;
-searchProviders();
-document.getElementById("providerSection").scrollIntoView({behavior:"smooth"});
-}
-
-function findServices(){
-document.getElementById("providerSection").scrollIntoView({behavior:"smooth"});
-}
-
-function viewProvider(p){
-selectedProvider=p;
-
-document.getElementById("mName").textContent=p.name||"Service Provider";
-document.getElementById("mRating").textContent="⭐ "+(p.rating||"New")+" Rating";
-
-document.getElementById("mInfo").textContent=
-"🛠️ Service: "+(p.service||"Local Service")+
-"\n\n📍 Location: "+(p.location||"Local Area")+
-"\n\n🏆 Experience: "+(p.experience||"Not provided")+
-"\n\n💰 Price: "+(p.price||"Contact provider")+
-"\n\n📞 Phone: "+(p.phone||"Not provided");
-
-const photo=document.getElementById("mPhoto");
-
-if(p.photo){
-photo.src=p.photo;
-photo.style.display="block";
-}else{
-photo.style.display="none";
-}
-
-document.getElementById("modal").style.display="flex";
-}
-
-function closeModal(){
-document.getElementById("modal").style.display="none";
-selectedProvider=null;
-}
-
-function callProvider(){
-if(!selectedProvider||!selectedProvider.phone){
-alert("📱 Phone number is not available.");
-return;
-}
-const phone=String(selectedProvider.phone).replace(/\D/g,"");
-if(!phone){
-alert("📱 Invalid phone number.");
-return;
-}
-location.href="tel:"+phone;
-}
-
-function whatsappProvider(){
-if(!selectedProvider||!selectedProvider.phone){
-alert("📱 WhatsApp number is not available.");
-return;
-}
-
-let phone=String(selectedProvider.phone).replace(/\D/g,"");
-
-if(phone.length===10)phone="91"+phone;
-
-const msg="Hello "+(selectedProvider.name||"Provider")+
-", I found your service on Local Service Hub. I would like to know more about your service.";
-
-window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg),"_blank");
-}
-
-function getLocation(){
-
-const status=document.getElementById("locationStatus");
-
-if(!navigator.geolocation){
-status.textContent="Location is unavailable. You can continue searching normally.";
-return;
-}
-
-status.textContent="📍 Getting your location...";
-
-navigator.geolocation.getCurrentPosition(
-()=>{
-status.textContent="📍 Location enabled. You can continue searching normally.";
-},
-()=>{
-status.textContent="Location not enabled. You can continue using the website normally.";
-},
-{timeout:10000,maximumAge:300000}
-);
-}
-
-function safe(v){
-return String(v||"Not provided")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-}
-
-window.addEventListener("storage",load);
-load();
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
